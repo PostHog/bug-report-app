@@ -181,6 +181,7 @@ export function inject({ config, posthog }) {
 
     const form = `
         <textarea class='bug-textarea' name='bug' rows=6></textarea>
+        <input class='bug-textinput' name='email' placeholder="email" />
         <div class='bottom-section'>
             <div class='buttons'>
                 <a class='form-cancel' type='button'>Close</a>
@@ -211,6 +212,7 @@ export function inject({ config, posthog }) {
             posthog.capture(config.eventName || 'bug Sent', {
                 [config.bugProperty || '$bug']: this.bug.value,
                 sessionRecordingUrl: sessionRecordingUrl,
+                email: this.email.value
             })
             Object.assign(formElement.style, { display: 'none' })
             Object.assign(thanksElement.style, { display: 'flex' })
@@ -221,6 +223,8 @@ export function inject({ config, posthog }) {
         },
     })
     const textarea = formElement.getElementsByClassName('bug-textarea')[0] as HTMLTextAreaElement
+    const emailInput = formElement.getElementsByClassName('bug-emailinput')[0] as HTMLInputElement
+
     const cancelButton = formElement.getElementsByClassName('form-cancel')[0] as HTMLElement
     const submitButton = formElement.getElementsByClassName('form-submit')[0] as HTMLButtonElement
     const footerArea = formElement.getElementsByClassName('specific-issue')[0] as HTMLElement
